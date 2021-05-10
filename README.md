@@ -1,3 +1,3 @@
 # gidierre_builder
 
-bot discord of roleplay discord server
+Discord bot for easy roleplay
