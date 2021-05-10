@@ -38,6 +38,12 @@ exports.Colors = {
     speak,
 }
 
+exports.Utils = {
+    getRoleID(guild, role) {
+        return guild.roles.cache.find(r => r.name == role).id
+    }
+}
+
 //ESEMPIO DI MODULO
 exports.Check = {
     /**

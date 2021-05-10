@@ -12,7 +12,7 @@ module.exports = {
 }
 
 function addCathegory(guild, name) {
-    let onlyMaster = [{ id: getRoleID(guild, 'Master Gidierre'), allow: [Util.Pex.sendMsg] }, { id: getRoleID(guild, '@everyone'), deny: [Util.Pex.sendMsg] }];
+    let onlyMaster = [{ id: Util.Utils.getRoleID(guild, 'Master Gidierre'), allow: [Util.Pex.sendMsg] }, { id: Util.Utils.getRoleID(guild, '@everyone'), deny: [Util.Pex.sendMsg] }];
     
     guild.channels.create(name, {
         type: "category",
@@ -34,8 +34,4 @@ function addChannel(guild, category, name, chanType, options) {
         createdChan.setParent(category.id,  { lockPermissions: false });
     }).catch(console.error);
 
-}
-
-function getRoleID(guild, role) {
-    return guild.roles.cache.find(r => r.name == role).id
 }

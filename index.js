@@ -39,6 +39,8 @@ client.on('message', message => {
         case ('remove'):
             client.commands.get('remove').execute(message, args, discord);
             break;
+        case ('setdj'):
+            client.commands.get('setdj').execute(message, args, discord)
     }
 })
 
