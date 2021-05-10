@@ -1,3 +1,0 @@
-const TOKEN = 'ODQxMjU1OTE5MjAzNTE2NDE2.YJkGoA.Y8aaIoS6gZ6EDfo9BS-GTBxS4UA'
-
-module.exports = TOKEN;
