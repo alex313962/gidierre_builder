@@ -19,6 +19,7 @@
   "homepage": "https://github.com/alex313962/gidierre_builder#readme",
   "dependencies": {
     "discord.js": "^12.5.3",
-    "dotenv": "^9.0.1"
+    "dotenv": "^9.0.1",
+    "express": "^4.17.1"
   }
 }

@@ -36,6 +36,9 @@ client.on('message', message => {
         case ('add'):
             client.commands.get('add').execute(message, args, discord);
             break;
+        case ('remove'):
+            client.commands.get('remove').execute(message, args, discord);
+            break;
     }
 })
 
