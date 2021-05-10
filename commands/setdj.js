@@ -4,7 +4,7 @@ module.exports = {
     name: 'setdj',
     description: 'command that set the sender user able to pilot the rythm bot',
     execute(msg, args, discord) {
-        if (msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.some(role => role.name === "dj"))
+        if (msg.member.hasPermission('ADMINISTRATOR') || msg.member.roles.cache.some(role => role.name.toLowerCase() === "dj"))
             return null
         
         let memID = msg.author.id
