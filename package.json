@@ -1,0 +1,23 @@
+{
+  "name": "gidierre_builder",
+  "version": "1.0.0",
+  "description": "Discord bot for easy roleplay",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alex313962/gidierre_builder.git"
+  },
+  "author": "Alex313962",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alex313962/gidierre_builder/issues"
+  },
+  "homepage": "https://github.com/alex313962/gidierre_builder#readme",
+  "dependencies": {
+    "discord.js": "^12.5.3"
+  }
+}
