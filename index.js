@@ -4,13 +4,30 @@ const discord = require('discord.js');
 const client = new discord.Client();
 const keepAlive = require('./server');
 const pfx = '|';
+var cron = require('node-cron');
 
 const fs = require('fs');
 
 client.commands = new discord.Collection();
 const commandFile = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-let reactedMessages = []
+let reactedMessages = JSON.parse(fs.readFileSync('./data/reactMessages.json'))
+
+//CRON
+cron.schedule('*/10 * * * * *', () => {
+    console.log(reactedMessages)
+    fs.writeFileSync('./data/reactMessages.json', JSON.stringify(reactedMessages))
+})
+
+cron.schedule('*/9 * * * * *', () => {
+    console.log("sto qua")
+    for(k in reactedMessages){
+        if(!client.guild.roles.cache.some(r => r.name.toLowerCase() == reactedMessages[k].roleName.toLowerCase())){
+            console.log("ruolo inesistente")
+            reactedMessages.splice(k, 1);
+        }
+    }
+})
 
 //INIT
 /* creates the list of usable commands */
@@ -48,6 +65,12 @@ client.on('message', message => {
             break;
         case ('reaction'):
             client.commands.get('reaction').execute(message, args, discord, reactedMessages);
+            break;
+        case ('welp'):
+        case ('elp'):
+        case ('soccorso'):
+        case ('help'):
+            client.commands.get('help').execute(message,args,discord);
             break;
     }
 })
