@@ -8,8 +8,14 @@ module.exports = {
             return msg.channel.send(Util.Reply.sendBaseEmbed("mi sa di no", "Non hai permessi sufficenti", Util.Colors.red));
 
         let catName = args.join(' ')
-        let category = msg.guild.channels.cache.find(cat=> cat.name === catName);
-        category.children.forEach(channel => channel.delete());
-        category.delete();
+        let category = msg.guild.channels.cache.find(cat => cat.name === catName);
+        category.children.forEach(channel => {
+            setTimeout(() => {
+                channel.delete()
+            }, 500)
+        });
+        setTimeout(() => {
+            category.delete();
+        }, 500)
     }
 }

@@ -59,7 +59,8 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (reaction.emoji.name == "✔") {
             if (reaction.message.reactions.cache.get("✔").count <= impMessage.capMem) {
                 let role = reaction.message.guild.roles.cache.find(role => role.name === impMessage.roleName);
-                await reaction.message.guild.members.cache.get(user.id).roles.add(role)
+                if(role)
+                    await reaction.message.guild.members.cache.get(user.id).roles.add(role)
             }
             else{
                 reaction.message.reactions.resolve("✔").users.remove(user.id)
@@ -71,7 +72,8 @@ client.on('messageReactionRemove', async (reaction, user) => {
     if (reactedMessages.some(e => e.msgID == reaction.message.id) && !user.bot) {
         let impMessage = reactedMessages.find(e => e.msgID == reaction.message.id);
         let role = reaction.message.guild.roles.cache.find(role => role.name == impMessage.roleName);
-        await reaction.message.guild.members.cache.get(user.id).roles.remove(role);
+        if(role)
+            await reaction.message.guild.members.cache.get(user.id).roles.remove(role);
     }
 })
 

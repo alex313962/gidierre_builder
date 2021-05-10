@@ -5,7 +5,10 @@ module.exports = {
     description: 'Create stuff',
     execute(msg, args, discord) {
         if (!msg.member.roles.cache.some(role => role.name == "Master Gidierre"))
-            return msg.channel.send(Util.Reply.sendBaseEmbed("mi sa di no", "Non hai permessi sufficenti", Util.Colors.red));
+            return msg.channel.send(Util.Reply.sendBaseEmbed("Mi sa di no", "Non hai permessi sufficenti", Util.Colors.red));
+
+        if(args.length <= 0)
+            return msg.channel.send(Util.Reply.sendBaseEmbed('Argomenti non specificati', 'Usa `|help` per avere più informazioni', Util.Colors.red))
 
         addCathegory(msg.guild, args.join(' '));
     }

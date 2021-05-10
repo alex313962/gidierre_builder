@@ -5,8 +5,18 @@ module.exports = {
     name: 'reaction',
     description: 'Setting Reaction', // It isn't really, I just use this to try stuff.
     execute(msg, args, discord, rMsgs) {
+        if(args.length <= 0)
+            return msg.channel.send(Util.Reply.sendBaseEmbed('Argomenti non specificati', 'Usa `|help` per avere più informazioni', Util.Colors.red))
+        
         const react = "✔";
+
         let memberCap = args.shift()
+        if(Number.isNaN(Number(memberCap)) || memberCap <= 0)
+            return msg.channel.send(Util.Reply.sendBaseEmbed('Non è un numero valido', 'Stai cercando di aggiungere un testo o un numero negativo al posto del numero di partecipanti al tavolo ', Util.Colors.red))//utile
+
+        if(args.length <= 0)
+            return msg.channel.send(Util.Reply.sendBaseEmbed('Manca ancora qualcosa', 'Usa `|help` per avere più informazioni', Util.Colors.red))
+        
         let nameRole = args.join(' ')
         let authID = msg.author.id
 
