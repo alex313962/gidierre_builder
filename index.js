@@ -10,6 +10,7 @@ const fs = require('fs');
 client.commands = new discord.Collection();
 const commandFile = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
+let reactedMessages = []
 
 //INIT
 /* creates the list of usable commands */
@@ -36,15 +37,44 @@ client.on('message', message => {
         case ('add'):
             client.commands.get('add').execute(message, args, discord);
             break;
+        case ('finish'):
+            client.commands.get('finish').execute(message, args, discord);
+            break;
         case ('remove'):
             client.commands.get('remove').execute(message, args, discord);
             break;
         case ('setdj'):
-            client.commands.get('setdj').execute(message, args, discord)
+            client.commands.get('setdj').execute(message, args, discord);
+            break;
+        case ('reaction'):
+            client.commands.get('reaction').execute(message, args, discord, reactedMessages);
+            break;
+    }
+})
+
+
+client.on('messageReactionAdd', async (reaction, user) => {
+    if (reactedMessages.some(e => e.msgID == reaction.message.id) && !user.bot) {
+        let impMessage = reactedMessages.find(e => e.msgID == reaction.message.id)
+        if (reaction.emoji.name == "✔") {
+            if (reaction.message.reactions.cache.get("✔").count <= impMessage.capMem) {
+                let role = reaction.message.guild.roles.cache.find(role => role.name === impMessage.roleName);
+                await reaction.message.guild.members.cache.get(user.id).roles.add(role)
+            }
+            else{
+                reaction.message.reactions.resolve("✔").users.remove(user.id)
+            }
+        }
+    }
+})
+client.on('messageReactionRemove', async (reaction, user) => {
+    if (reactedMessages.some(e => e.msgID == reaction.message.id) && !user.bot) {
+        let impMessage = reactedMessages.find(e => e.msgID == reaction.message.id);
+        let role = reaction.message.guild.roles.cache.find(role => role.name == impMessage.roleName);
+        await reaction.message.guild.members.cache.get(user.id).roles.remove(role);
     }
 })
 
 keepAlive();
 
 client.login(TOKEN);
-
