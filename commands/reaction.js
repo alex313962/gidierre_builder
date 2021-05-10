@@ -34,7 +34,7 @@ module.exports = {
 
                 message.react(react).then(() => {
                     msg.delete()
-                    rMsgs.push({ guildID: msg.guild.id, msgID: message.id, capMem: Number(memberCap) + 1, roleName: nameRole, authorName: msg.author.username })
+                    rMsgs.push({ guildID: msg.guild.id, channelID: message.channel.id, msgID: message.id, capMem: Number(memberCap) + 1, roleName: nameRole, authorName: msg.author.username })
                 });
             })
             .catch(console.error);
