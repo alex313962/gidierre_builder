@@ -6,6 +6,16 @@ const defColor = '#FA8F40'
 const red = '#FA1444'
 const green = '#6DFA46'
 
+/* PERMISSIONS */
+// complete list here https://discord.com/developers/docs/topics/permissions
+const muteMembers = "MUTE_MEMBERS"
+const moveMembers = "MOVE_MEMBERS"
+const viewChannel = "VIEW_CHANNEL"
+const sendMsg = "SEND_MESSAGES"
+const sendTTSMsg = "SEND_TTS_MESSAGES"
+const connectChannel = "CONNECT"
+const speak = "SPEAK"
+
 /**
  * Color list 
  */
@@ -15,6 +25,18 @@ exports.Colors = {
     green,
 }
 
+/**
+ * Pex list
+ */
+ exports.Pex = {
+    muteMembers,
+    moveMembers,
+    viewChannel,
+    sendMsg,
+    sendTTSMsg,
+    connectChannel,
+    speak,
+}
 
 //ESEMPIO DI MODULO
 exports.Check = {

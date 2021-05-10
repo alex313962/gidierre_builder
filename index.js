@@ -32,6 +32,9 @@ client.on('message', message => {
         case ('ping'):
             client.commands.get('ping').execute(message, args, discord);
             break;
+        case ('add'):
+            client.commands.get('add').execute(message, args, discord);
+            break;
     }
 })
 
