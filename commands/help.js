@@ -23,6 +23,7 @@ function baseHelp(embed){
         { name: "setdj", value: "Permette di ottenere i comandi da dj per 30 secondi.\n da usare per scacciare quel bot per niente fastidioso di nome rythm" },
         { name: "reaction", value: "Aggiunge le react a una campagna e avvisa il master quando il tavolo si riempie" },
         { name: "finish", value: "Chiude la campagna e rimuove il ruolo ad essa associata" },
+        { name: "activetables", value: "Mostra una lista di tavoli (ruoli) attualmente utilizzabili" },
     )
     return embed
 }

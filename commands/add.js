@@ -4,7 +4,7 @@ module.exports = {
     name: 'add',
     description: 'Create stuff',
     execute(msg, args, discord) {
-        if (!msg.member.roles.cache.some(role => role.name == "Master Gidierre"))
+        if (!msg.member.roles.cache.some(role => role.name.toLowerCase() == "master gidierre"))
             return msg.channel.send(Util.Reply.sendBaseEmbed("Mi sa di no", "Non hai permessi sufficenti", Util.Colors.red));
 
         if(args.length <= 0)
@@ -20,7 +20,7 @@ function addCathegory(guild, name) {
     guild.channels.create(name, {
         type: "category",
     }).then(e => {
-        let cat = guild.channels.cache.find(c => c.name == name);
+        let cat = guild.channels.cache.find(c => c.name.toLowerCase() == name.toLowerCase());
         addChannel(guild, cat, name,        "text",     null);
         addChannel(guild, cat, "Regole",    "text",     onlyMaster);
         addChannel(guild, cat, "Materiale", "text",     onlyMaster);

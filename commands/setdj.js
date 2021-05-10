@@ -8,11 +8,11 @@ module.exports = {
             return null
         
         let memID = msg.author.id
-        var role = msg.guild.roles.cache.find(role => role.name === "dj");
+        var role = msg.guild.roles.cache.find(role => role.name.toLowerCase() === "dj");
         msg.member.roles.add(role);
 
         setTimeout(() => {
-            if(!msg.member.roles.cache.some(role => role.name === "Master Gidierre"))
+            if(!msg.member.roles.cache.some(role => role.name.toLowerCase() === "master gidierre"))
                 msg.member.roles.remove(role)
         }, 30000);
     }

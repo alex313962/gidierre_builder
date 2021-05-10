@@ -40,7 +40,7 @@ exports.Colors = {
 
 exports.Utils = {
     getRoleID(guild, role) {
-        return guild.roles.cache.find(r => r.name == role).id
+        return guild.roles.cache.find(r => r.name.toLowerCase() == role.toLowerCase()).id
     }
 }
 
