@@ -12,8 +12,7 @@ module.exports = {
         msg.member.roles.add(role);
 
         setTimeout(() => {
-            if(!msg.member.roles.cache.some(role => role.name.toLowerCase() === "master gidierre"))
-                msg.member.roles.remove(role)
+            msg.member.roles.remove(role)
         }, 30000);
     }
 }

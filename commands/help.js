@@ -25,6 +25,8 @@ function baseHelp(embed){
         { name: "finish", value: "Chiude la campagna e rimuove il ruolo ad essa associata" },
         { name: "activetables", value: "Mostra una lista di tavoli (ruoli) attualmente utilizzabili" },
     )
+    .setURL('https://github.com/alex313962/gidierre_builder')
+    .setFooter('Per maggiori informazioni visitare questo link: https://github.com/alex313962/gidierre_builder')
     return embed
 }
 

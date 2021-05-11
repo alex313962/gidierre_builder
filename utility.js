@@ -28,7 +28,7 @@ exports.Colors = {
 /**
  * Pex list
  */
- exports.Pex = {
+exports.Pex = {
     muteMembers,
     moveMembers,
     viewChannel,
@@ -52,6 +52,14 @@ exports.Check = {
      * @returns boolean
      */
     isInVoiceChannel(me) { return me.voice.channel ? true : false },
+
+    hasSetup(guild) {
+        let setup = JSON.parse(fs.readFileSync('./data/setup.json'))
+        if (setup.hasOwnProperty(guild.id))
+            return true
+        else
+            return false
+    },
 }
 
 

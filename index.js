@@ -17,7 +17,7 @@ const commandFile = fs.readdirSync('./commands').filter(file => file.endsWith('.
 let reactedMessages = JSON.parse(fs.readFileSync('./data/reactMessages.json'))
 
 //CRON
-cron.schedule('*/30 * * * *', () => {
+cron.schedule('*/6 * * * * *', () => {
     fs.writeFileSync('./data/reactMessages.json', JSON.stringify(reactedMessages))
 })
 
@@ -39,12 +39,12 @@ for (file of commandFile) {
 
 
 //STARTIN
-client.once('ready', () => {
+client.once('ready', async () => {
     /*Cachin msgs to react to*/
     for (let i = 0; i < reactedMessages.length; i++) {
         let guild = client.guilds.cache.get(reactedMessages[i].guildID)
         let channel = guild.channels.cache.get(reactedMessages[i].channelID)
-        channel.messages.fetch(reactedMessages[i].msgID)
+        await channel.messages.fetch(reactedMessages[i].msgID)
     }
 
     console.log('GiDiErre is online');
@@ -55,6 +55,19 @@ client.on('message', message => {
 
     const args = message.content.slice(pfx.length).split(/ +/);
     const command = args.shift().toLowerCase();
+
+    if(!Util.Check.hasSetup(message.guild)){
+        if(command == 'setup'){
+            client.commands.get('setup').execute(message, args, discord);
+            return
+        }
+        else if(command == 'help'){
+            client.commands.get('help').execute(message, args, discord, reactedMessages);
+            return 
+        }
+        else
+            return message.channel.send(Util.Reply.sendBaseEmbed('Prima di tutto devi impostare il setup!','Esegui il comando `|setup` o `|help`'))
+    }
 
     switch (command) {
         case ('ping'):
@@ -85,6 +98,15 @@ client.on('message', message => {
         case ('activetable'):
         case ('activetables'):
             client.commands.get('activetables').execute(message, args, discord, reactedMessages);
+            break;
+        case ('setup'):
+            client.commands.get('setup').execute(message, args, discord);
+            break;
+        case ('showsetup'):
+            client.commands.get('showsetup').execute(message, args, discord);
+            break;
+        case ('updatesetup'):
+            client.commands.get('updatesetup').execute(message, args, discord);
             break;
     }
 })

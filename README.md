@@ -1,10 +1,5 @@
 # gidierre_builder
 
-## Authors
-
-Mitra98t  
-alex313962
-
 ***
 
 ## Chi sono?
@@ -19,6 +14,9 @@ Nasco per semplificare la gestione dei server di discord.
 
 ### Indice
 
+- [setup](#setup)
+- [update_setup](#setup)
+- [view_setup](#setup)
 - [add](#add)
 - [remove](#remove)
 - [reaction](#reaction)
@@ -27,6 +25,18 @@ Nasco per semplificare la gestione dei server di discord.
 - [setdj](#setdj)
 - [activetable](#activetable)
 - [help](#help)
+
+### SETUP
+
+**Setup** è il primo comando che dovrà essere utilizzato in un server nuovo. Serve per settare il ruolo da master di campagna, in modo da definire chi può lanciare determinati comandi. Per lanciarlo, scrivi |setup nomeruolo
+
+### UPDATE SETUP
+
+**Update setup** serve per modificare il setup precedentemente creato. Si usa nello stesso modo di setup
+
+### VIEW SETUP
+
+**View_setup** ti permette di visualizzare il ruolo che hai settato come master
 
 ### ADD 
 
