@@ -70,6 +70,21 @@ questo ruolo può essere usato per creare dei tavoli bloccati con |add.
 
 ### FINISH
 
-**Finish** serve per, ahime, terminare le campagne. Una volta lanciato questo comando, non ci si potrà più prenotare al post e il ruolo verrà eliminato dal server. Nel caso dovesse essere ricreato con un tavolo successivo, i vecchi utenti non si ritrovaranno quel ruolo
+**Finish** serve per, ahime, terminare le campagne. Una volta lanciato questo comando, non ci si potrà più prenotare al post e il ruolo verrà eliminato dal server. Nel caso dovesse essere ricreato con un tavolo successivo, i vecchi partecipanti alla campagna non avranno quel ruolo
 
 
+### SETDJ
+
+**Setdj** è un comando esclusivamente pensato per chi usa Rythm bot. 
+permette a un utente normale di acquisire un ruolo dummy di nome DJ che permettere di stoppare il bot. Il ruolo rimarrà solo per 30 secondi così da disincertivarne l'utilizzo e sarà disattivabile in fase di init    
+
+### ACTIVETABLES
+
+**ActiveTables** è il comando per vedere le campagne attive nel server. 
+
+![reaction_bot_pm_preview](/img_docs/activetables_empty.PNG) ![reaction_bot_pm_preview](/img_docs/activetables_full.PNG) 
+
+
+### HELP
+
+comando per visualizzare una versione ridotta di questa docs direttamente dentro il vostro server
