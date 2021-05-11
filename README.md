@@ -15,28 +15,27 @@ Nasco per semplificare la gestione dei server di discord.
 ### Indice
 
 - [setup](#setup)
-- [update_setup](#setup)
-- [view_setup](#setup)
+- [updatesetup](#updatesetup)
+- [showsetup](#showsetup)
 - [add](#add)
 - [remove](#remove)
 - [reaction](#reaction)
 - [finish](#finish)
-- [remove](#remove)
 - [setdj](#setdj)
-- [activetable](#activetable)
+- [activetable](#activetables)
 - [help](#help)
 
 ### SETUP
 
 **Setup** è il primo comando che dovrà essere utilizzato in un server nuovo. Serve per settare il ruolo da master di campagna, in modo da definire chi può lanciare determinati comandi. Per lanciarlo, scrivi |setup nomeruolo
 
-### UPDATE SETUP
+### UPDATESETUP
 
-**Update setup** serve per modificare il setup precedentemente creato. Si usa nello stesso modo di setup
+**Updatesetup** serve per modificare il setup precedentemente creato. Si usa nello stesso modo di setup
 
-### VIEW SETUP
+### SHOWSETUP
 
-**View_setup** ti permette di visualizzare il ruolo che hai settato come master
+**Showsetup** ti permette di visualizzare il ruolo che hai settato come master
 
 ### ADD 
 
