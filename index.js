@@ -2,6 +2,7 @@ require('dotenv').config()
 const TOKEN = process.env.TOKEN
 const discord = require('discord.js');
 const client = new discord.Client();
+const Util = require('./utility')
 const keepAlive = require('./server');
 const pfx = '|';
 var cron = require('node-cron');
@@ -19,9 +20,9 @@ cron.schedule('*/10 * * * * *', () => {
 })
 
 cron.schedule('*/9 * * * * *', () => {
-    for(let i = 0; i < reactedMessages.length; i++){
+    for (let i = 0; i < reactedMessages.length; i++) {
         let guild = client.guilds.cache.get(reactedMessages[i].guildID)
-        if(!guild.roles.cache.some(r => r.name.toLowerCase() == reactedMessages[i].roleName.toLowerCase())){
+        if (!guild.roles.cache.some(r => r.name.toLowerCase() == reactedMessages[i].roleName.toLowerCase())) {
             reactedMessages.splice(i, 1);
         }
     }
@@ -68,10 +69,10 @@ client.on('message', message => {
         case ('elp'):
         case ('soccorso'):
         case ('help'):
-            client.commands.get('help').execute(message,args,discord);
+            client.commands.get('help').execute(message, args, discord);
             break;
         case ('activetables'):
-            client.commands.get('activetables').execute(message,args,discord, reactedMessages);
+            client.commands.get('activetables').execute(message, args, discord, reactedMessages);
             break;
     }
 })
@@ -83,10 +84,20 @@ client.on('messageReactionAdd', async (reaction, user) => {
         if (reaction.emoji.name == "✔") {
             if (reaction.message.reactions.cache.get("✔").count <= impMessage.capMem) {
                 let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === impMessage.roleName.toLowerCase());
-                if(role)
+                if (role)
                     await reaction.message.guild.members.cache.get(user.id).roles.add(role)
+
+                if (reaction.message.reactions.cache.get("✔").count == impMessage.capMem) {
+                    let embedToSend = Util.Reply.sendBaseEmbed(`Riguardo al tavolo ${impMessage.roleName} che hai creato`, `Hai raggiunto il numero di giocatori che aspettavi`, Util.Colors.green)
+                    embedToSend.addField("Lista di Giocatori", "ci vuole giocare?")
+                    reaction.message.reactions.cache.get("✔").users.cache.forEach(e => {
+                        if(!e.bot)
+                            embedToSend.addField(e.username, "Vuole giocare!")
+                    })
+                    reaction.message.author.send(embedToSend)
+                }
             }
-            else{
+            else {
                 reaction.message.reactions.resolve("✔").users.remove(user.id)
             }
         }
@@ -96,7 +107,7 @@ client.on('messageReactionRemove', async (reaction, user) => {
     if (reactedMessages.some(e => e.msgID == reaction.message.id) && !user.bot) {
         let impMessage = reactedMessages.find(e => e.msgID == reaction.message.id);
         let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() == impMessage.roleName.toLowerCase());
-        if(role)
+        if (role)
             await reaction.message.guild.members.cache.get(user.id).roles.remove(role);
     }
 })
