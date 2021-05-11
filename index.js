@@ -69,6 +69,19 @@ client.on('message', message => {
             return message.channel.send(Util.Reply.sendBaseEmbed('Prima di tutto devi impostare il setup!','Esegui il comando `|setup` o `|help`'))
     }
 
+    if(!Util.Check.hasRoleInSetup(message.guild)){
+        message.channel.send(Util.Reply.sendBaseEmbed('HEY!', "Il ruolo che hai impostato come 'master' non esiste più, per favore reimpostalo, usa `|setup`")).then(()=>{
+            let setup = JSON.parse(fs.readFileSync('./data/setup.json'))
+            for(let k in setup){
+                if(k == message.guild.id)
+                    delete setup[k]
+            }
+            fs.writeFileSync('./data/setup.json', JSON.stringify(setup))
+        })
+        
+        return
+    }
+
     switch (command) {
         case ('ping'):
             client.commands.get('ping').execute(message, args, discord);

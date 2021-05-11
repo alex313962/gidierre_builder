@@ -60,6 +60,14 @@ exports.Check = {
         else
             return false
     },
+    hasRoleInSetup(guild) {
+        let setup = JSON.parse(fs.readFileSync('./data/setup.json'))
+        
+        if(guild.roles.cache.some(r => r.name.toLowerCase() == setup[guild.id].masterRole.toLowerCase()))
+            return true
+        else
+            return false
+    },
 }
 
 
