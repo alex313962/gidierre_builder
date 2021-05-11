@@ -3,11 +3,13 @@ const TOKEN = process.env.TOKEN
 const discord = require('discord.js');
 const client = new discord.Client();
 const Util = require('./utility')
+const ReactionHandler = require('./ReactionHandler')
 const keepAlive = require('./server');
 const pfx = '|';
 var cron = require('node-cron');
 
 const fs = require('fs');
+const e = require('express');
 
 client.commands = new discord.Collection();
 const commandFile = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
@@ -15,11 +17,11 @@ const commandFile = fs.readdirSync('./commands').filter(file => file.endsWith('.
 let reactedMessages = JSON.parse(fs.readFileSync('./data/reactMessages.json'))
 
 //CRON
-cron.schedule('*/10 * * * * *', () => {
+cron.schedule('*/30 * * * *', () => {
     fs.writeFileSync('./data/reactMessages.json', JSON.stringify(reactedMessages))
 })
 
-cron.schedule('*/9 * * * * *', () => {
+cron.schedule('* */12 * * *', () => {
     for (let i = 0; i < reactedMessages.length; i++) {
         let guild = client.guilds.cache.get(reactedMessages[i].guildID)
         if (!guild.roles.cache.some(r => r.name.toLowerCase() == reactedMessages[i].roleName.toLowerCase())) {
@@ -35,13 +37,21 @@ for (file of commandFile) {
     client.commands.set(command.name, command);
 }
 
+
 //STARTIN
 client.once('ready', () => {
+    /*Cachin msgs to react to*/
+    for (let i = 0; i < reactedMessages.length; i++) {
+        let guild = client.guilds.cache.get(reactedMessages[i].guildID)
+        let channel = guild.channels.cache.get(reactedMessages[i].channelID)
+        channel.messages.fetch(reactedMessages[i].msgID)
+    }
+
     console.log('GiDiErre is online');
 })
 
 client.on('message', message => {
-    if (!message.content.startsWith(pfx) || message.author.bot) return;
+    if (!message.content.startsWith(pfx) || message.author.bot || !message.channel.guild) return;
 
     const args = message.content.slice(pfx.length).split(/ +/);
     const command = args.shift().toLowerCase();
@@ -62,6 +72,7 @@ client.on('message', message => {
         case ('setdj'):
             client.commands.get('setdj').execute(message, args, discord);
             break;
+        case ('reactions'):
         case ('reaction'):
             client.commands.get('reaction').execute(message, args, discord, reactedMessages);
             break;
@@ -71,6 +82,7 @@ client.on('message', message => {
         case ('help'):
             client.commands.get('help').execute(message, args, discord);
             break;
+        case ('activetable'):
         case ('activetables'):
             client.commands.get('activetables').execute(message, args, discord, reactedMessages);
             break;
@@ -81,6 +93,7 @@ client.on('message', message => {
 client.on('messageReactionAdd', async (reaction, user) => {
     if (reactedMessages.some(e => e.msgID == reaction.message.id) && !user.bot) {
         let impMessage = reactedMessages.find(e => e.msgID == reaction.message.id)
+
         if (reaction.emoji.name == "✔") {
             if (reaction.message.reactions.cache.get("✔").count <= impMessage.capMem) {
                 let role = reaction.message.guild.roles.cache.find(role => role.name.toLowerCase() === impMessage.roleName.toLowerCase());
@@ -88,13 +101,19 @@ client.on('messageReactionAdd', async (reaction, user) => {
                     await reaction.message.guild.members.cache.get(user.id).roles.add(role)
 
                 if (reaction.message.reactions.cache.get("✔").count == impMessage.capMem) {
-                    let embedToSend = Util.Reply.sendBaseEmbed(`Riguardo al tavolo ${impMessage.roleName} che hai creato`, `Hai raggiunto il numero di giocatori che aspettavi`, Util.Colors.green)
-                    embedToSend.addField("Lista di Giocatori", "ci vuole giocare?")
-                    reaction.message.reactions.cache.get("✔").users.cache.forEach(e => {
-                        if(!e.bot)
-                            embedToSend.addField(e.username, "Vuole giocare!")
-                    })
-                    reaction.message.author.send(embedToSend)
+                    if (!reactedMessages.find(e => e.msgID == reaction.message.id).hasOwnProperty('completeSend')) {
+                        reaction.message.author.send(ReactionHandler.Fun.completeTableMessage(impMessage, reaction.message)).then((sendedMessage) => {
+                            reactedMessages.find(e => e.msgID == reaction.message.id)['completeSend'] = Date.now()
+                        })
+                    }
+                    else {
+                        //7200000 => 2 ore in millisecondi
+                        if (reactedMessages.find(e => e.msgID == reaction.message.id).completeSend < Date.now() - 7200000) {
+                            reaction.message.author.send(ReactionHandler.Fun.completeTableMessage(impMessage, reaction.message)).then((sendedMessage) => {
+                                reactedMessages.find(e => e.msgID == reaction.message.id)['completeSend'] = Date.now()
+                            })
+                        }
+                    }
                 }
             }
             else {
