@@ -24,6 +24,9 @@ function baseHelp(embed){
         { name: "reaction", value: "Aggiunge le react a una campagna e avvisa il master quando il tavolo si riempie" },
         { name: "finish", value: "Chiude la campagna e rimuove il ruolo ad essa associata" },
         { name: "activetables", value: "Mostra una lista di tavoli (ruoli) attualmente utilizzabili" },
+        { name: "setup", value: "setup iniziale del bot"},
+        { name: "updatesetup", value: "aggiorna il ruolo di setup"},
+        { name: "showsetup", value: "visualizza il ruolo di setup"},
     )
     .setURL('https://github.com/alex313962/gidierre_builder')
     .setFooter('Per maggiori informazioni visitare questo link: https://github.com/alex313962/gidierre_builder')
@@ -38,9 +41,6 @@ function specificHelp(embed, spec){
     switch (command){
         case ('help'):
             embed.setDescription("Ci sto provando, ma tu non h e l p")
-            break;
-        case ('!help'):
-            embed.setDescription("Forse intendevi |. con ! su sto bot non fai na sega, giusto per ricordartelo")
             break;
         case ('add'):
             embed.setDescription("Usa `|add <nome categoria>`\n")
@@ -72,7 +72,20 @@ function specificHelp(embed, spec){
             .addFields(
                 { name: "nome campagna", value: "nome della categoria da eliminare. \nQuesto comando elimina pure il ruolo associato alla campagna" }
             )
+        case ('setup'):
+            embed.setDescription("Usa `|setup <nome ruolo>`\n")
+            .addFields(
+                { name: "nome ruolo", value: "nome del ruolo che identificherà i master" }
+            )
             break;
+        case ('updatesetup'):
+            embed.setDescription("Usa `|updatesetup <nome ruolo>`\n")
+            .addFields(
+                { name: "nome ruolo", value: "nome del nuovo ruolo per i master. \n Sostituirà il precedente ruolo" }
+            )
+        case ('showsetup'):
+            embed.setDescription("Usa `|updatesetup per visualizzare il ruolo master che è impostato`\n")
+        
         default:
             embed.setDescription("hei, qui non c'è niente!")
     }
